@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="images/sddm.css" >
+<link rel="stylesheet" type="text/css" href="images/cour.css" >
+    <script language="JavaScript">
+        function validateLogin(){
+            if(document.lform.user.value=="" || document.lform.pass.value==""){
+                alert("Enter Username and Password");
+                return false;
+            }else
+                return true;
+        }
+    </script> 
+</head>
+<body bgcolor="" topmargin="0" >
+<form method="post" action="login.jsp" >
+<table border="0">
+				<tr>
+				<td width="6%" height="4" valign="top" align="center"  background="images/tp_bg.gif" >
+                    <font face="verdana" size="6" color="Black"><b>
+                      SECURE MAIL
+                    </b></font>
+					
+                </td>
+                </tr>
+              
+</table>
+<table>
+<tr><td><img src="images/pic_login.jpg" width="364" height="365"/>
+<td><table border="0" width="100%">
+<tr><td width="42%" valign="top">User email<td><input type="text" name="user" size="20"></tr>
+<tr><td>Password<td><input type="password" name="pass" size="20"></tr>
+<tr><td align="center" colspan="2"><input type="submit" value="Log in" name="B1" size="20"></tr>
+       <tr><td colspan="2" align="center"> New User?<a HREF="registerpage.htm">Register</a></td></tr>
+</table>
+</tr></table>
+<table width="100%">
+            <tr height="5"><td bgcolor="brown"></td></tr>
+            <tr>
+    <td height="1" ><div align="center"><marquee>&copy; Secure Mail. All Rights Reserved<marquee></div></td>
+  </tr>
+
+        </table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</form>
+</body>
+</html>

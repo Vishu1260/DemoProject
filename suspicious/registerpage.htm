@@ -1,0 +1,631 @@
+<html>
+        <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+                <meta http-equiv="Content-Language" content="en-us">
+                <title>Registration Page</title>
+                     <link rel="stylesheet" type="text/css" href="images/sddm.css" >
+<link rel="stylesheet" type="text/css" href="images/cour.css" >
+        </head>
+		<form method="POST" name="form" onsubmit="return validate_final()" action="reg.jsp">
+       
+                <script Language="JavaScript">
+                function year()
+                {
+                        for(i=2008;i>1900;i--)
+                        {
+                                document.write('<option value='+i+'>'+i+'</option>');
+                        }
+                }
+                function date()
+                {
+                        for(i=01;i<=31;i++)
+                        {
+                                document.write('<option value='+ i+ '>'+i+'</option>');
+                        }
+                 }
+//functions.js
+
+//overall flags
+                 var unameflag = false;
+                 var pwordflag = false;
+                 var pword2flag = false;
+                 var emailflag = false;
+                 var hintaflag = false;
+                 var ccflag=false;
+                 var fnameflag=false;
+                 var lnameflag=false;
+                 var adl1flag=false;
+                 var adl2flag=false;
+                 var stateflag=false;
+                 var cityflag=false;
+                 var countryflag=false;
+
+//validate flags
+                 var unamevalidated = false;
+                 var emailvalidated = false;
+
+//Create a boolean variable to check for a valid Internet Explorer instance.
+                 var xmlhttp = false;
+//Check if we are using IE.
+
+
+                 try 
+                 {
+	                 //If the javascript version is greater than 5.
+	                 xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+	
+                 } 
+                 catch (e) 
+                 {
+		//If not, then use the older active x object.
+		 try 
+		 {
+			//If we are using IE.
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		 } 
+		 catch (E) 
+		 {
+			//Else we must be using a non-IE browser.
+			xmlhttp = false;
+		 }
+	}
+
+	//If we are using a non-IE browser, create a javascript instance of the object.
+	if (!xmlhttp && typeof XMLHttpRequest != 'undefined') 
+	{
+		xmlhttp = new XMLHttpRequest();
+	}
+
+
+//Function to run a word grabber script.
+function grabword (theelement)
+{
+//If there is nothing in the box, run Ajax to populate it.
+//alert(theelement);
+
+	switch (theelement) 
+	{
+		/*case "username_id":
+				//do javascript validation
+				validate(theelement);	
+				
+				//do ajax functionality
+				if(unamevalidated)
+				{
+					var unametemp = document.getElementById(theelement).value;
+					if ( unametemp != "")
+					{
+						//Change the background color.
+						//alert(document.getElementById(theelement).value);
+						//document.getElementById("unamemsg").innerHTML = "available :-)";
+						//document.getElementById(theelement).style.background = "#CCCCCC";
+						
+						serverPage = "unameverify.jsp?uname="+unametemp;
+						var obj = document.getElementById("unamemsg");
+						xmlhttp.open("GET", serverPage, true);
+						xmlhttp.onreadystatechange = function() 
+						{
+							
+							if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+							{
+                                                                var indexu=xmlhttp.responseText.indexOf("available");
+                                                                if(indexu != -1)
+								{       
+                                                                        
+                                                                        obj.innerHTML = "<img src='./images/tick.png' width='12' height='12' /> Available";
+									unameflag = true;
+								}
+								else
+									obj.innerHTML = "<img src='./images/cross.png' width='12' height='12' /> User Name already exists";
+							}
+						}
+						xmlhttp.send(null);
+					} 
+					else 
+					{
+						//Change the background color.
+						//document.getElementById(theelement).style.background = "#FFFFFF";
+						//If the box is already populated, clear it.
+						document.getElementById(theelement).innerHTML = "";
+					}
+				}
+				break;
+	case "emailid_id":
+				//do javascript validation
+				validate(theelement);	
+				
+				//do ajax functionality
+				if(emailvalidated)
+				{
+					var emailtemp = document.getElementById(theelement).value;
+					if ( emailtemp != "")
+					{
+						//Change the background color.
+						//alert(document.getElementById(theelement).value);
+						//document.getElementById("unamemsg").innerHTML = "available :-)";
+						//document.getElementById(theelement).style.background = "#CCCCCC";
+						
+						serverPage = "emailverify.jsp?email="+emailtemp;
+						var obj = document.getElementById("emailmsg");
+						xmlhttp.open("GET", serverPage, true);
+						xmlhttp.onreadystatechange = function() 
+						{
+							
+							if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+							{
+                                                                var indexu=xmlhttp.responseText.indexOf("available");
+                                                                if(indexu != -1)
+								{       
+                                                                        
+                                                                        obj.innerHTML = "<img src='./images/tick.png' width='12' height='12' /> Available";
+									emailflag = true;
+								}
+								else
+									obj.innerHTML = "<img src='./images/cross.png' width='12' height='12' /> Person with this particular email already exists";
+							}
+						}
+						xmlhttp.send(null);
+					} 
+					else 
+					{
+						//Change the background color.
+						//document.getElementById(theelement).style.background = "#FFFFFF";
+						//If the box is already populated, clear it.
+						document.getElementById(theelement).innerHTML = "";
+					}
+				}
+				break;*/
+				default:
+					validate(theelement);
+	}
+}
+
+function validate(theelement)
+{	
+	var uname;
+	var pw1;
+	var pw2;
+	var email;
+	var hinta;
+        var ccno;
+        var fname;
+	var adl1;
+        var adl2;
+        var city;
+        var state;
+        var country;
+        
+	switch (theelement) 
+	{
+		/*case "username_id":
+			var unamecheck=new RegExp("^[a-zA-Z0-9_\\d]+$","g");
+			uname=document.form.uname.value;
+			var uflag = 0;
+			
+			if(uname != "")
+			{
+				if(!uname.match(unamecheck))
+				{
+					document.getElementById("unamemsg").innerHTML = "<img src='./images/cross.png' width='12' height='12' /> no special character except UNDERSCORE is allowed";
+					uflag = 1;
+				}
+				if(uname==""||uname.length < 4||uname.length > 20)
+				{
+					document.getElementById("unamemsg").innerHTML = "<img src='./images/cross.png' width='12' height='12' /> min 4 characters and max 20";
+					uflag = 1;
+				}
+				if(uflag == 0)
+					unamevalidated = true; 
+			}
+			break;*/
+			
+		case "password_id":
+			
+			pw1=document.form.pw1.value;
+			var pflag1 = 0;
+			if(pw1 != "")
+			{
+				if (pw1.length < 6||pw1.length > 20)
+				{
+					document.getElementById("pwordmsg").innerHTML = "<img src='./images/cross.png' width='12' height='12' /> min 6 characters and max 20";
+					pflag1 = 1;
+				}
+				if((pw1.search("'"))>=0)
+				{
+					document.getElementById("pwordmsg").innerHTML="<img src='./images/cross.png' width='12' height='12' /> apostrophe not allowed!";
+					pflag1 = 1;
+				}
+				if(pflag1 == 0)
+				{
+					document.getElementById("pwordmsg").innerHTML="<img src='./images/tick.png' width='12' height='12' /> ";
+					pwordflag = true;
+				}
+			}
+			
+			break;
+			
+		case "repassword_id":
+			pw1=document.form.pw1.value;
+			pw2=document.form.pw2.value;
+			
+			if(pw2 != "")
+			
+				if(pw1 != pw2)
+					document.getElementById("repwordmsg").innerHTML= "<img src='./images/cross.png' width='12' height='12' /> passwords not matching";
+				else
+				{
+					document.getElementById("repwordmsg").innerHTML= "<img src='./images/tick.png' width='12' height='12' /> ";
+					pword2flag = true;
+				}
+			break;
+			
+		/*case "emailid_id":
+			emailid=document.form.email.value;
+			var apos=document.form.email.value.indexOf("@");
+			var dotpos=document.form.email.value.lastIndexOf(".");
+			var eflag = 0;
+			if(emailid !="")
+			{
+				if((apos<1)||((dotpos-apos)<2))
+				{
+					document.getElementById("emailmsg").innerHTML= "<img src='./images/cross.png' width='12' height='12' /> Provide valid emailid";
+					eflag = 1;
+				}
+                                if( eflag == 0)
+                                {
+                                    emailvalidated = true;
+                                }
+                        }
+			break;*/
+			
+		case "ccno_id":
+			
+			break;
+               case "hinta_id":
+			hinta=document.form.hinta.value;
+			var hflag = 0;
+			if(hinta !="")
+			{
+				if((hinta.search("'"))>=0)
+				{
+					document.getElementById("hintamsg").innerHTML="<img src='./images/cross.png' width='12' height='12' /> apostrophe not allowed!";
+					hflag = 1;
+				}
+				
+				if(hflag == 0)
+				{
+					document.getElementById("hintamsg").innerHTML="<img src='./images/tick.png' width='12' height='12' /> ";
+					hintaflag = true;
+				}
+			}
+			break;
+                        
+                  case "fname_id":
+			var fnamecheck=new RegExp("^[a-zA-Z- \\d]+$","g");
+			fname=document.form.fname.value;
+			var fflag = 0;
+			
+			if(fname != "")
+			{
+				if(!fname.match(fnamecheck))
+				{
+					document.getElementById("fnamemsg").innerHTML = "<img src='./images/cross.png' width='12' height='12' /> Only letters, spaces and hyphens are allowed";
+					fflag = 1;
+				}
+				
+				if(fflag == 0)
+                                {
+                                        document.getElementById("fnamemsg").innerHTML="<img src='./images/tick.png' width='12' height='12' /> ";
+					fnameflag = true; 
+                                }
+			}
+			break;
+                        
+                case "lname_id":
+			var lnamecheck=new RegExp("^[a-zA-Z- \\d]+$","g");
+			lname=document.form.lname.value;
+			var lflag = 0;
+			
+			if(lname != "")
+			{
+				if(!lname.match(lnamecheck))
+				{
+					document.getElementById("lnamemsg").innerHTML = "<img src='./images/cross.png' width='12' height='12' /> Only letters, spaces and hyphens are allowed";
+					lflag = 1;
+				}
+				
+				if(lflag == 0)
+                                {
+                                        document.getElementById("lnamemsg").innerHTML="<img src='./images/tick.png' width='12' height='12' /> ";
+					lnameflag = true; 
+                                }
+			}
+			break;
+                        
+                  case "adl1_id":
+			adl1=document.form.adl1.value;
+                        if(!adl1=="")
+                        {
+                                            document.getElementById("adl1msg").innerHTML="<img src='./images/tick.png' width='12' height='12' /> ";
+                                       	    adl1flag = true; 
+                        }
+                        break;
+                   case "adl2_id":
+			adl2=document.form.adl1.value;
+                        if(!adl2=="")
+                        {
+                                            document.getElementById("adl2msg").innerHTML="<img src='./images/tick.png' width='12' height='12' /> ";
+                                       	    adl2flag = true; 
+                        }
+                        break;
+                    case "city_id":
+			var citycheck=new RegExp("^[a-zA-Z- \\d]+$","g");
+			city=document.form.city.value;
+			var ctflag = 0;
+			
+			if(city != "")
+			{
+				if(!city.match(citycheck))
+				{
+					document.getElementById("citymsg").innerHTML = "<img src='./images/cross.png' width='12' height='12' /> Only letters, spaces and hyphens are allowed";
+					ctflag = 1;
+				}
+				
+				if(ctflag == 0)
+                                {
+                                        document.getElementById("citymsg").innerHTML="<img src='./images/tick.png' width='12' height='12' /> ";
+					cityflag = true; 
+                                }
+			}
+			break;
+                  
+                    case "state_id":
+			var statecheck=new RegExp("^[a-zA-Z- \\d]+$","g");
+			state=document.form.state.value;
+			var stflag = 0;
+			
+			if(state != "")
+			{
+				if(!state.match(statecheck))
+				{
+					document.getElementById("statemsg").innerHTML = "<img src='./images/cross.png' width='12' height='12' /> Only letters, spaces and hyphens are allowed";
+					stflag = 1;
+				}
+				
+				if(stflag == 0)
+                                {
+                                        document.getElementById("statemsg").innerHTML="<img src='./images/tick.png' width='12' height='12' /> ";
+					stateflag = true; 
+                                }
+			}
+			break;
+                      
+                    case "country_id":
+			var countrycheck=new RegExp("^[a-zA-Z- \\d]+$","g");
+			country=document.form.country.value;
+			var cntflag = 0;
+			
+			if(country != "")
+			{
+				if(!country.match(countrycheck))
+				{
+					document.getElementById("countrymsg").innerHTML = "<img src='./images/cross.png' width='12' height='12' /> Only letters, spaces and hyphens are allowed";
+					cntflag = 1;
+				}
+				
+				if(cntflag == 0)
+                                {
+                                        document.getElementById("countrymsg").innerHTML="<img src='./images/tick.png' width='12' height='12' /> ";
+					countryflag = true; 
+                                }
+			}
+			break;
+
+                      
+	}               
+}
+
+
+function validate_final()
+{
+	
+	/*if(!unameflag)
+	{
+		alert("please verify user name");
+                var theelement = "username_id";
+		validate(theelement);
+		return false;
+	}*/
+	
+	if(!pwordflag)
+	{
+		validate("password_id");
+                alert("please verify password");
+		return false;
+	}
+	
+	if(!pword2flag)
+	{
+		alert("please verify password");
+                validate("repassword_id");
+		return false;
+	}
+	
+        if(!hintaflag)
+	{
+		validate("hinta_id");
+                alert("please verify hint answer");
+		return false;
+	}
+        
+	
+       
+        if(!fnameflag)
+        {
+                validate("fname_id");
+                alert("please verify first name");
+		return false;
+        }
+         
+        if(!lnameflag)
+        {   
+                validate("lname_id");
+                alert("please verify last name");
+		return false;
+        }
+          
+	/*if(!emailflag)
+	{
+		validate("emailid_id");
+                alert("please verify email");
+		return false;
+	}*/
+	
+        if(!adl1flag)
+        {
+                validate("adl1_id");
+                alert("please fill in address line 1");
+		return false;
+         }
+         if(!adl2flag)
+         {
+                validate("adl2_id");
+                alert("please fill in address line 2");
+		return false;
+         }
+        
+        if(!cityflag)
+        {
+                validate("city_id");
+                alert("please verify city");
+		return false;
+         }
+         if(!stateflag)
+        {
+                validate("state_id");
+                alert("please verify state");
+		return false;
+         }
+        if(!countryflag)
+        {
+                validate("country_id");
+                alert("please verify country");
+		return false;
+         }
+
+	//form.submit();
+}
+                </script>
+                <body bgcolor="" topmargin="0">
+                <table border="0">
+               <tr>
+                <td width="2%">
+                <img src="images/1.jpeg" />
+                </td>
+                <td width="18%" height="13" valign="middle" align="center"  background="images/tp_bg.gif" >
+                    <font face="verdana" size="6" color="Black"><b>
+                       SECURE MAIL
+                    </b></font>
+                </td>
+            </tr>
+                </table>
+                <table border="0" width="100%">
+                        <tr>
+                                <td width="18%" valign="top">
+
+                                   <div class="mainDiv" >
+                      <div class="dropMenu" >
+                  <!-- -->
+                  <div class="subMenu" style="display:inline;">
+                    <div class="subItem"><b><font size="4"><a HREF="login.html">Home</a></font></b></div>
+                </div>
+              </div>
+                                </td>
+
+                                <td width="62%" valign="top">
+                                        <p align="center" style="margin-top: 1; margin-bottom: 1"><b><u><font
+                                                color="#800000" face="Arial" size="3">Enter Registration Information</font></u></b></p>
+                                        <p align="left" style="margin-top: 1; margin-bottom: 1"><font face="Arial" size="2" color="#800000"><b>1.<u>Login Information</u></b></font></p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 1; margin-bottom:1"><font face="Arial" size="2" color="#800000">&nbsp;User Name*:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input id="username_id" type="text" name="uname" size="20" onfocus="if(this.value == '') document.getElementById('unamemsg').innerHTML = '';" onblur="grabword(this.id)" size="20"><span id="unamemsg" style="height:20px;"> </span>
+                                        </font></p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:3"><font face="Arial" size="2" color="#800000">&nbsp;Password*:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" id="password_id" name="pw1" size="20" onblur="grabword(this.id)">
+                                                        <span id="pwordmsg" style="height:20px;"> </span>
+                                        </font></p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:3"><font face="Arial" size="2" color="#800000">&nbsp;Confirm Password*: <input type="Password" id="repassword_id" name="pw2" size="20" onblur="grabword(this.id)">
+                                                        <span id="repwordmsg" style="height:20px;"> </span>
+                                        </font></p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:3"><font face="Arial" size="2" color="#800000">&nbsp;Secret Question*: &nbsp;&nbsp; <select style="width: auto" name="hintq">
+                                                                <option value="What was the name of your first school">What was the name of your first school?</option>
+                                                                <option value="What is your favourite sports team">What is your favourite sports team?</option>
+                                                                <option value="What is your nick name">What is your nickname?</option>
+                                                                <option value="What is your favourite game">What is your favourite game?</option>
+                                                                <option value="What is your favourite cuisine">What is your favourite cuisine?</option>
+                                                        </select>
+                                        </font></p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:3"><font face="Arial" size="2" color="#800000">&nbsp;Secret Answer*:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input id="hinta_id" type="text" name="hinta" size="20" onblur="grabword(this.id)">
+                                                        <span id="hintamsg" style="height:20px;"> </span>
+                                        </font></p>
+                                        
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:3">&nbsp;<font face="Arial" size="2" color="red"></font></p>
+                                        <p align="left" style="margin-top: 1; margin-bottom: 1"><font face="Arial" size="2" color="#800000"><b>2.<u>Personal Information</u></b></font></p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 1; margin-bottom:1"><font face="Arial" size="2" color="#800000">&nbsp;First Name*:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" id="fname_id" name="fname" size="20" onblur="grabword(this.id)"><span id="fnamemsg" style="height:20px;"> </span></font></p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:3"><font face="Arial" size="2" color="#800000">&nbsp;Middle Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="mname" size="20"></font></p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:3"><font face="Arial" size="2" color="#800000">&nbsp;Last Name*:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" id="lname_id" name="lname" size="20" onblur="grabword(this.id)"><span id="lnamemsg" style="height:20px;"> </span></font></p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:3"><font face="Arial" size="2" color="#800000">&nbsp;Date of Birth*(dd/mm/yyyy):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font>
+                                                <select size="1" name="date">
+                                                        <script Language="JavaScript">
+date();
+                                                        </script>
+                                                </select>
+                                                <select size="1" name="month">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                        <option>5</option>
+                                                        <option>6</option>
+                                                        <option>7</option>
+                                                        <option>8</option>
+                                                        <option>9</option>
+                                                        <option>10</option>
+                                                        <option>11</option>
+                                                        <option>12</option>
+                                                </select>
+                                                <select size="1" name="year">
+                                                        <script Language="JavaScript">
+year();
+                                                        </script>
+                                                </select>
+                                        </p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:3"><font face="Arial" size="2" color="#800000">&nbsp;&nbsp;Email*:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="emailid_id" type="text" name="email" size="20" onblur="grabword(this.id)">
+                                                        <span id="emailmsg" style="height:20px;"> </span>
+                                        </font></p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:3"><font face="Arial" size="2" color="#800000">&nbsp;Address Line1*:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="adl1" id="adl1_id" onblur="grabword(this.id)" size="20"><span id="adl1msg" style="height:20px;"> </span></font></p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:3"><font face="Arial" size="2" color="#800000">&nbsp;Address Line2*:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="adl2" id="adl2_id" onblur="grabword(this.id)" size="20"><span id="adl2msg" style="height:20px;"> </span></font></p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:3"><font face="Arial" size="2" color="#800000">&nbsp;City*:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="city" id="city_id" onblur="grabword(this.id)" size="20"><span id="citymsg" style="height:20px;"> </span></font></p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:3"><font face="Arial" size="2" color="#800000">&nbsp;State*:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="state" id="state_id" onblur="grabword(this.id)" size="20"><span id="statemsg" style="height:20px;"> </span></font></p>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:10"><font face="Arial" size="2" color="#800000">&nbsp;Country*:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="country" id="country_id" onblur="grabword(this.id)" size="20"><span id="countrymsg" style="height:20px;"> </span></font></p>
+                                        <table border="0" width="100%">
+                                                <tr>
+                                                        <td width="50%" valign="middle" align="center"><input type="submit" value="Submit" name="submit"><input type="reset" value="Reset" name="B2"></td>
+                                                        <td width="50%" valign="middle" align="center"></td>
+                                                </tr>
+                                        </table>
+                                        <p align="left" style="margin-left: -2; margin-right: -2; margin-top: 3; margin-bottom:3">&nbsp;</p>
+                                </td>
+                                <td width="20%" valign="top">
+                                   <img src="images/reg.JPG" />
+
+                                </td>
+                        </tr>
+                </table>
+        </form>
+        <table width="100%">
+            <tr height="5"><td bgcolor="brown"></td></tr>
+            <tr>
+    <td height="1" ><div align="center"><marquee>&copy;Secure Mail. All Rights Reserved</marquee></div></td>
+  </tr>
+
+        </table>
+        </body>
+</html>

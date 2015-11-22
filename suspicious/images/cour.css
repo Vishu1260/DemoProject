@@ -1,0 +1,22 @@
+#apDiv2 {
+	position:absolute;
+	width:90px;
+	height:86px;
+	z-index:1;
+	left: 68px;
+	top: 3px;
+}
+.style1 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 18px;
+}
+.style2 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FFFFFF;
+}
+.style3 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
