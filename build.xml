@@ -3,7 +3,7 @@
 
 	<path id="compile.classpath">
 		<fileset dir="C:/gitrepos/DemoProject/suspicious/WEB-INF/lib">
-			<include name="*.jar"/>
+			<include name="**/*.*"/>
 		</fileset>
 	</path>
 	<!-- C:/gitrepos/DemoProject/suspicious/WEB-INF -->
