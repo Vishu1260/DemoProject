@@ -1,34 +1,38 @@
-<?xml version="1.0" ?> 
-<project name="suspicious" default="war">
+<?xml version="1.0"?>
+<project name="Suspicious">
+   <property name="src.dir" value="suspicious"/>
+   <property name="web.dir" value="suspicious"/>
+   <property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
+   <property name="name" value="suspicious"/>
 
-	<path id="compile.classpath">
-		<fileset dir="C:/gitrepos/DemoProject/suspicious/WEB-INF/lib">
-			<include name="**/*.*"/>
-		</fileset>
-	</path>
-	<!-- C:/gitrepos/DemoProject/suspicious/WEB-INF -->
-	<target name="init">
-		<mkdir dir="build/classes"/>
-		<mkdir dir="dist" />
-	</target>
-	
-	<target name="compile" depends="init" >
-		<javac destdir="build/classes" debug="true" srcdir="suspicious">
-			<classpath refid="compile.classpath"/>
-		</javac>
-	</target>
-	
-	<target name="war" depends="compile">
-		<war destfile="dist/suspicious.war" webxml="C:/gitrepos/DemoProject/suspicious/WEB-INF/web.xml">
-			<fileset dir="C:/gitrepos/DemoProject/suspicious/WEB-INF/"/>
-			<lib dir="C:/gitrepos/DemoProject/suspicious/WEB-INF/lib"/>
-			<classes dir="build/classes"/>
-		</war>
-	</target>
-	
-	<target name="clean">
-		<delete dir="dist" />
-		<delete dir="build" />
-	</target>
-	
+   <path id="master-classpath">
+      <fileset dir="${web.dir}/WEB-INF/lib">
+         <include name="*.jar"/>
+      </fileset>
+      <pathelement path="${build.dir}"/>
+   </path>
+
+<!--   <target name="build" description="Compile source tree java files">
+      <mkdir dir="${build.dir}"/> 
+      <javac destdir="${build.dir}" source="1.5" target="1.5">
+         <src path="${src.dir}"/>
+         <classpath refid="master-classpath"/>
+      </javac>
+   </target> -->
+ 
+   <target name="clean" description="Clean output directories">
+      <delete>
+         <fileset dir="${build.dir}">
+            <include name="**/*.class"/>
+         </fileset>
+      </delete>
+   </target>
+   <target name="build-war">
+   <war destfile="C:/gitrepos/DemoProject/suspicious.war" webxml="${web.dir}/WEB-INF/web.xml">
+      <fileset dir="${src.dir}">
+         <include name="**"/>
+      </fileset>
+      <!-- <classes dir="${build.dir}/web"/> -->
+   </war>
+</target>
 </project>
